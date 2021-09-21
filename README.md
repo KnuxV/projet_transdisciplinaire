@@ -50,12 +50,49 @@ Each folder is about or less than 100k results.
 create a unique csv file containing all the data.
   - Only 8 variables are kept (Publication Type, Authors, Title, Language, Keywords, Abstract, Address, Year).
   - Many rows contain errors, and we choose to remove them rather than trying to fix them.
-  - we drop every single row that is missing on of those variables.
+  - we drop every single row that is missing on of those variables. 
+    ```python
+                df = pd.read_csv(file_path, sep='\t', encoding='utf-8', index_col=False, error_bad_lines=False)
+                # we keep only a handful of useful variables, to avoid bugs, we only keep the file if our 8 variables
+                # are present.
+                columns = ['PT', 'AU', 'TI', 'LA', 'DE', 'AB', 'C1', 'PY']
+                set_columns = set(columns)
+                if set_columns.issubset(set(df.columns)):
+                    # making sure to only keep rows that have the proper columns
+                    df = df[['PT', 'AU', 'TI', 'LA', 'DE', 'AB', 'C1', 'PY']]
+                else:
+                    continue
+
+    ```
   - we exclude problematic lines ```error_bad_lines=False```.
   - We only keep a handful of languages, and remove every row that does not have a correct language.
+    ```python
+    # Only keeping main languages to filter wrongly parsed rows
+    lst_of_language = ["English", "Spanish", "Portugese", "Chinese", "French", "Russian", "German",
+                       "Korean", "Turkish",
+                       "Polish", "Czech", "Japanese", "Italian"]
+    condition = df.LA.isin(lst_of_language)
+    df = df[condition]
+    ```
   - Address are transformed to country. Tweaks are necessary to standardise the country name in order to generate 
 plotly maps.
+    ```python
+    # fixing countries
+    df['C1'] = df['C1'].apply(lambda x: x.split(", ")[-1] if "USA" not in x else "United States")
+    df['C1'] = df['C1'].replace(['Peoples R China'], 'China')
+    ```
   - We found about 30k duplicated (6%) which are removed.
+    ```python
+    # Dropping duplicated
+    print(df.duplicated().sum())
+    df = df.drop_duplicates()
+    ```
+  - Some error on the year column, we need to make date is in the correct range
+    ```python
+    # Fixing Year of Publication
+    condition_year = df.PY > 2009
+    df = df[condition_year]
+    ```
 
 3. Remarks about the method
 We are dealing with a very large corpus with **470 928** articles related to climate action 
