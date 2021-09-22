@@ -4,9 +4,9 @@
 
 ### University of Strasbourg
 
-###I. Presentation (by Stefano Bianchini)
+### I. Presentation (by Stefano Bianchini)
 
-   ####1. Unlike past technological revolutions, digital transformation comes at a time of profound interdependent changes 
+   #### 1. Unlike past technological revolutions, digital transformation comes at a time of profound interdependent changes 
    including global warming, migration, an aging population, and new geopolitical tensions. 
    It will cause great stress. 
    on our economic, social and political systems, creating some preconditions for 
@@ -14,9 +14,9 @@
    articulation of the three pillars – social, economic, environmental – including good governance.  
      
 
-   ####2. Sustainable development goals by the UN :
+   #### 2. Sustainable development goals by the UN :
    ![](img/sdg.jpg)
-   ####3. AI for good?
+   #### 3. AI for good?
       1. Some Pros
      Support green transition through smarter energy management
      Virtual and augmented realities empowered by AI can enable transnational communication networks, 
@@ -26,16 +26,16 @@
       responsible for a high carbon footprint.
       Digitally-driven configurations of the economic, social, political and cultural systems may 
       disempower individuals and amplify disparities.
-   ####4. The project 
+   #### 4. The project 
       1. Mapping the inter-linkages between digital transformation and the Sustainable Development Goals (SDGs) 
       in research and innovation.
       2. Assessing the contribution – i.e., enabling, neutral, or inhibiting – of digital transformation on 
       the achievement of the SDGs and the targets therein. (Sentiment analysis)  
         
 
-###II. Method  
+### II. Method  
 
-####1. We do queries on Web of Science (WoS), choosing one sdg at the time. First one, is the climate action sdg (number 13)
+#### 1. We do queries on Web of Science (WoS), choosing one sdg at the time. First one, is the climate action sdg (number 13)
 Adapting the query found here (https://aurora-network-global.github.io/sdg-queries/query_SDG13.xml) to WoS 
 (see no_code/query_climate_action.txt), we found about 470k articles related to Climate action on WoS.
 What we download is not the text of the articles, but metadatas such as Authors, Abstract etc...
@@ -47,7 +47,7 @@ is necessary to downlaod the data by chunks of 100k or else results. We chose to
 filtering the date (2010-2013, 2014-2015, 2016-2017, 2018,2019,2020,2021).
 Each folder is about or less than 100k results.  
 
-####2. We use a couple of scripts (reading_cleaning.py, fixed_languages_country_year_no_dups.py) to read, clean and 
+#### 2. We use a couple of scripts (reading_cleaning.py, fixed_languages_country_year_no_dups.py) to read, clean and 
 create a unique csv file containing all the data.
   - Only 8 variables are kept (Publication Type, Authors, Title, Language, Keywords, Abstract, Address, Year).
   - Many rows contain errors, and we choose to remove them rather than trying to fix them.
@@ -95,15 +95,15 @@ plotly maps.
     df = df[condition_year]
     ```
 
-####3. Remarks about the method
+#### 3. Remarks about the method
 We are dealing with a very large corpus with **470 928** articles related to climate action 
 only. Therefore, we made to choice to be rash regarding the selection, only keeping
 rows that does not countain any Errors. As a results, we have a total of 
 **349 497 non-null rows** that is to say, we have lost 25.6% of the articles.
   
 
-###III. Filtering using AI keywords
-   ####1.Two ways to filter
+### III. Filtering using AI keywords
+   #### 1.Two ways to filter
 First way is to create a new dataframe that contains only articles related to both 
 climate action and artificial intelligence. The second way is to create a new column "AI'
 that reads True if it is related to AI and False if not. 
@@ -114,7 +114,7 @@ it presents the advantage to be way lighter than the full dataframe.
 - The full dataframe with a AI column is found here: data/clean_data/full_data_AI_col.csv
 It is way bigger (1.3 GB).
   
-####2. How to filter
+#### 2. How to filter
 - We use a list of words related to IA (available here : data/ai_keywords.csv).   
 This list includes :  
 
@@ -193,6 +193,6 @@ Voice recognition._
 df['AI'] = numpyp.where(condition, True, False)
 ```
 
-####3. Results
+#### 3. Results
 From **382 742** rows related to climate change to **5 899** rows related to both _climate action_ and Artificial Intelligence.  
 **1.5%** of the corpus only is related to AI.
