@@ -17,20 +17,20 @@
    #### 2. Sustainable development goals by the UN :
    ![](img/sdg.jpg)
    #### 3. AI for good?
-      1. Some Pros
+1. <ins>Some Pros</ins> :
      Support green transition through smarter energy management
      Virtual and augmented realities empowered by AI can enable transnational communication networks, 
      thereby stimulating cultural diversity.
-      2. Some Cons
-      Data processing requires (massive) computing centres, which are high energy intensive and thus 
-      responsible for a high carbon footprint.
-      Digitally-driven configurations of the economic, social, political and cultural systems may 
-      disempower individuals and amplify disparities.
-   #### 4. The project 
-      1. Mapping the inter-linkages between digital transformation and the Sustainable Development Goals (SDGs) 
-      in research and innovation.
-      2. Assessing the contribution – i.e., enabling, neutral, or inhibiting – of digital transformation on 
-      the achievement of the SDGs and the targets therein. (Sentiment analysis)  
+2. <ins>Some Cons</ins> :
+Data processing requires (massive) computing centres, which are high energy intensive and thus 
+responsible for a high carbon footprint.
+Digitally-driven configurations of the economic, social, political and cultural systems may 
+disempower individuals and amplify disparities.
+#### 4. The project 
+   1. Mapping the inter-linkages between digital transformation and the Sustainable Development Goals (SDGs) 
+   in research and innovation.
+   2. Assessing the contribution – i.e., enabling, neutral, or inhibiting – of digital transformation on 
+   the achievement of the SDGs and the targets therein. (Sentiment analysis)  
         
 
 ### II. Method  
