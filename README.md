@@ -4,9 +4,9 @@
 
 ### University of Strasbourg
 
-I. Presentation (by Stefano Bianchini)
+###I. Presentation (by Stefano Bianchini)
 
-   1. Unlike past technological revolutions, digital transformation comes at a time of profound interdependent changes 
+   ####1. Unlike past technological revolutions, digital transformation comes at a time of profound interdependent changes 
    including global warming, migration, an aging population, and new geopolitical tensions. 
    It will cause great stress. 
    on our economic, social and political systems, creating some preconditions for 
@@ -14,9 +14,9 @@ I. Presentation (by Stefano Bianchini)
    articulation of the three pillars – social, economic, environmental – including good governance.  
      
 
-   2. Sustainable development goals by the UN :
+   ####2. Sustainable development goals by the UN :
    ![](img/sdg.jpg)
-   3. AI for good?
+   ####3. AI for good?
       1. Some Pros
      Support green transition through smarter energy management
      Virtual and augmented realities empowered by AI can enable transnational communication networks, 
@@ -26,16 +26,16 @@ I. Presentation (by Stefano Bianchini)
       responsible for a high carbon footprint.
       Digitally-driven configurations of the economic, social, political and cultural systems may 
       disempower individuals and amplify disparities.
-   4. The project 
+   ####4. The project 
       1. Mapping the inter-linkages between digital transformation and the Sustainable Development Goals (SDGs) 
       in research and innovation.
       2. Assessing the contribution – i.e., enabling, neutral, or inhibiting – of digital transformation on 
       the achievement of the SDGs and the targets therein. (Sentiment analysis)  
         
 
-II. Method  
+###II. Method  
 
-1. We do queries on Web of Science (WoS), choosing one sdg at the time. First one, is the climate action sdg (number 13)
+####1. We do queries on Web of Science (WoS), choosing one sdg at the time. First one, is the climate action sdg (number 13)
 Adapting the query found here (https://aurora-network-global.github.io/sdg-queries/query_SDG13.xml) to WoS 
 (see no_code/query_climate_action.txt), we found about 470k articles related to Climate action on WoS.
 What we download is not the text of the articles, but metadatas such as Authors, Abstract etc...
@@ -45,8 +45,9 @@ we use a very simple auto-clicker (auto_clicker.py + mouse_pos.py).
 Web of science refuses to download more 100k results at the time, therefore it
 is necessary to downlaod the data by chunks of 100k or else results. We chose to download by 
 filtering the date (2010-2013, 2014-2015, 2016-2017, 2018,2019,2020,2021).
-Each folder is about or less than 100k results.
-2. We use a couple of scripts (reading_cleaning.py, fixed_languages_country_year_no_dups.py) to read, clean and 
+Each folder is about or less than 100k results.  
+
+####2. We use a couple of scripts (reading_cleaning.py, fixed_languages_country_year_no_dups.py) to read, clean and 
 create a unique csv file containing all the data.
   - Only 8 variables are kept (Publication Type, Authors, Title, Language, Keywords, Abstract, Address, Year).
   - Many rows contain errors, and we choose to remove them rather than trying to fix them.
@@ -94,12 +95,104 @@ plotly maps.
     df = df[condition_year]
     ```
 
-3. Remarks about the method
+####3. Remarks about the method
 We are dealing with a very large corpus with **470 928** articles related to climate action 
 only. Therefore, we made to choice to be rash regarding the selection, only keeping
 rows that does not countain any Errors. As a results, we have a total of 
 **349 497 non-null rows** that is to say, we have lost 25.6% of the articles.
   
 
-4. Filtering using AI keywords
-   1. 
+###III. Filtering using AI keywords
+   ####1.Two ways to filter
+First way is to create a new dataframe that contains only articles related to both 
+climate action and artificial intelligence. The second way is to create a new column "AI'
+that reads True if it is related to AI and False if not. 
+We have done both methods:  
+
+- The filtered new dataframe is found here (data/clean_data/full_data_filtered.csv), 
+it presents the advantage to be way lighter than the full dataframe.
+- The full dataframe with a AI column is found here: data/clean_data/full_data_AI_col.csv
+It is way bigger (1.3 GB).
+  
+####2. How to filter
+- We use a list of words related to IA (available here : data/ai_keywords.csv).   
+This list includes :  
+
+_Artificial Intelligence, 
+Automated reasoning, 
+Backpropagation, 
+Computer vision, 
+Data mining, 
+Data science, 
+Deep learning, 
+Expert system*, 
+Face detection, 
+Feature extraction, 
+Generative adversarial network*, 
+Gesture recognition, 
+Image classification, 
+Image recognition, 
+Image segmentation, 
+Information retrieval, 
+Intelligent machine*, 
+Kernel machine, 
+Knowledge representation, 
+Machine intelligence, 
+Machine learning, 
+Machine translation, 
+Meta-learning, 
+Multilayer perceptron*, 
+Natural language processing, 
+Neural net*, 
+Object detection, 
+Object identification, 
+Object recognition, 
+Pattern recognition, 
+Pose estimation, 
+Reinforcement learning, 
+Semantic search, 
+Semi-supervised learning,
+Sentiment analysis, 
+Speech recognition,
+Statistical learning, 
+Supervised learning, 
+Text classification, 
+Transfer learning, 
+Transformer network*, 
+Unsupervised learning, 
+Voice recognition._
+
+- To filter, we, then, create a new column aggregating all the text columns. 
+(Title + Abstract + Keywords).
+    ```python
+    df["TXT"] = df["TI"] + " " + df["DE"] + " " + df["AB"]
+    ```
+- We generate a pattern of all the AI related keywords.
+    ```python
+        keyword_csv = pd.read_csv("data/ai_keywords.csv", sep="\t", encoding="utf-8")
+        # Put these keywords in a list and create a patter
+        lst_ai = []
+        for keyword in keyword_csv["Artificial Intelligence"]:
+            lst_ai.append(keyword)
+    
+        pattern = '|'.join([f'(?i){keyword}' for keyword in lst_ai])
+    ```
+- We can then filter using a condition:
+    ```python
+    condition = df.TXT.str.contains(pattern, na=False)
+    ```
+- Finally, creating a new database is done like this :
+    ```python
+        df = df[condition]
+    
+        columns = ['PT', 'AU', 'TI', 'LA', 'DE', 'AB', 'C1', 'PY', 'TXT']
+        df.to_csv("data/clean_data/full_data_filtered.csv", columns=columns, header=True, index=False, sep='\t')
+    ```
+- Whereas, we add a new column "AI" True/False, using the numpy "where" keyword like this (see "create_new_col_AI.py" script:
+```python
+df['AI'] = numpyp.where(condition, True, False)
+```
+
+####3. Results
+From **382 742** rows related to climate change to **5 899** rows related to both _climate action_ and Artificial Intelligence.  
+**1.5%** of the corpus only is related to AI.
