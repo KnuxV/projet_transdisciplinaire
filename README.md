@@ -53,16 +53,16 @@ create a unique csv file containing all the data.
   - Many rows contain errors, and we choose to remove them rather than trying to fix them.
   - we drop every single row that is missing on of those variables. 
     ```python
-                df = pd.read_csv(file_path, sep='\t', encoding='utf-8', index_col=False, error_bad_lines=False)
-                # we keep only a handful of useful variables, to avoid bugs, we only keep the file if our 8 variables
-                # are present.
-                columns = ['PT', 'AU', 'TI', 'LA', 'DE', 'AB', 'C1', 'PY']
-                set_columns = set(columns)
-                if set_columns.issubset(set(df.columns)):
-                    # making sure to only keep rows that have the proper columns
-                    df = df[['PT', 'AU', 'TI', 'LA', 'DE', 'AB', 'C1', 'PY']]
-                else:
-                    continue
+    df = pd.read_csv(file_path, sep='\t', encoding='utf-8', index_col=False, error_bad_lines=False)
+    # we keep only a handful of useful variables, to avoid bugs, we only keep the file if our 8 variables
+    # are present.
+    columns = ['PT', 'AU', 'TI', 'LA', 'DE', 'AB', 'C1', 'PY']
+    set_columns = set(columns)
+    if set_columns.issubset(set(df.columns)):
+        # making sure to only keep rows that have the proper columns
+        df = df[['PT', 'AU', 'TI', 'LA', 'DE', 'AB', 'C1', 'PY']]
+    else:
+        continue
 
     ```
   - we exclude problematic lines ```error_bad_lines=False```.
