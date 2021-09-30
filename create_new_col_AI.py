@@ -6,8 +6,11 @@ df1["AI"] =  True only if that is present in df2 that is if it is related to AI
 import pandas as pd
 import numpy as np
 
+
 if __name__ == "__main__":
-    file_path_main = "data/clean_data/full_data_fixed_language_country_year_no_dups.csv"
+    file_path_main = "data/clean_data/full_data.csv"
+    out_path_filtered = "data/clean_data/full_data_filtered.csv"
+    out_path_ai_col = "data/clean_data/full_data_AI_col.csv"
 
     # Reading and adding a column TXT that is the aggregate of all text columns
     df_main = pd.read_csv(file_path_main, sep='\t', encoding='utf-8', index_col=False)
@@ -32,6 +35,7 @@ if __name__ == "__main__":
     columns_main = ['PT', 'AU', 'TI', 'LA', 'DE', 'AB', 'C1', 'PY', 'TXT', 'AI']
     columns_filtered = ['PT', 'AU', 'TI', 'LA', 'DE', 'AB', 'C1', 'PY', 'TXT']
 
-    df_main.to_csv("data/clean_data/full_data_AI_col.csv", columns=columns_main, header=True, index=False, sep='\t')
-    df_filtered.to_csv("data/clean_data/full_data_filtered.csv", columns=columns_filtered, header=True, index=False,
+    df_main.to_csv(out_path_ai_col, columns=columns_main, header=True, index=False, sep='\t')
+    df_filtered.to_csv(out_path_filtered, columns=columns_filtered, header=True, index=False,
                        sep='\t')
+    print(df_main.info())
