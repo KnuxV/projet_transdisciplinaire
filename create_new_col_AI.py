@@ -66,14 +66,14 @@ def filter_w_ai(df, outfolder="data/clean_data/", outformat="pkl", option="both"
 
 if __name__ == "__main__":
     # Kevin // Comment, uncomment the right one.
-    # file_path_main = "data/clean_data/full_data.csv"
-    # out_path_filtered = "data/clean_data/full_data_filtered.pkl"
+    file_path_main = "data/clean_data/CA_full_data.pkl"
+    out_path_filtered = "data/clean_data/CA_full_data_filtered.pkl"
     # out_path_ai_col = "data/clean_data/full_data_AI_col.pkl"
 
     # Laura
-    file_path_main = "data/clean_data/LoL_full_data.pkl"
-    out_path_filtered_laura = "data/clean_data/LoL_full_data_filtered.pkl"
-    out_path_ai_col_laura = "data/clean_data/LoL_full_data_AI_col.pkl"
+    # file_path_main = "data/clean_data/LoL_full_data.pkl"
+    # out_path_filtered_laura = "data/clean_data/LoL_full_data_filtered.pkl"
+    # out_path_ai_col_laura = "data/trash_db/LoL_full_data_AI_col.pkl"
 
     # Reading and adding a column TXT that is the aggregate of all text columns
     if file_path_main.split(".")[-1] == "csv":
@@ -84,4 +84,4 @@ if __name__ == "__main__":
         raise Exception("The input file is neither csv nor pickle")
 
     # Main function
-    filter_w_ai(df,outfolder="data/clean_data/LoL_", outformat="pkl", option="both")
+    filter_w_ai(df, outfolder="data/clean_data/CA_", outformat="pkl", option="both")
