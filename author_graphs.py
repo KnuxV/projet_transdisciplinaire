@@ -1,21 +1,11 @@
 """
 script which creates a pyplot graph of 4 graphs (CA CA_AI, LoL, LoL_AI)
 """
-from ast import literal_eval
-
 import pandas as pd
-import networkx as nx
-import matplotlib.pyplot as plt
 from itertools import combinations
 from collections import Counter
 import os
 import plotly.graph_objects as go
-
-# prepping graph
-from plotly.subplots import make_subplots
-
-# fig = make_subplots(rows=2, cols=2)
-# rows, cols = 2, 2
 
 # From each df, we need to make two dfs : one with total of contributions per countries
 # One with all the collaborations between countries

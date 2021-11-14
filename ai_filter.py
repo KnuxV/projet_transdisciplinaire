@@ -1,10 +1,9 @@
-import pandas as pd
-import re
-import spacy
 """
 Create a new column that is the aggregation of Document Title, Abstract and Keywords
 Then apply a filter looking for articles relevant to artificial intelligence 
 """
+import pandas as pd
+
 file_path = "data/clean_data/full_data_fixed_language_country_year_no_dups.csv"
 
 if __name__ == "__main__":

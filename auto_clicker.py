@@ -4,7 +4,6 @@ import time
 # pgui.PAUSE = 2.5
 pgui.FAILSAFE = True
 
-
 # positional variables // TO BE CHANGED IF REUSED, using mouse_pos.py
 export_position = 1250, 540
 tab_delimited_file_position = 1304, 785
@@ -27,7 +26,7 @@ root_file_name = 1
 end_file_name = ".txt"
 
 if __name__ == "__main__":
-    while record_from <= 52915: # To be updated every chunk
+    while record_from <= 52915:  # To be updated every chunk
         # 1st step : click export + tab delimited file
         time.sleep(1)
         pgui.click(export_position, interval=0.5)
