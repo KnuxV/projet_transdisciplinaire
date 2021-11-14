@@ -58,11 +58,6 @@ def filter_w_ai(df, outfolder="data/clean_data/", outformat="pkl", option="both"
         save_df(df_filtered, path=str(outfolder) + "full_data_filtered." + str(outformat), typ=outformat,
                 columns=columns_filtered)
 
-    # df_main.to_csv(out_path_ai_col, columns=columns_main, header=True, index=False, sep='\t')
-    # df_filtered.to_csv(out_path_filtered, columns=columns_filtered, header=True, index=False,
-    #                    sep='\t')
-    # print(df_main.info())
-
 
 if __name__ == "__main__":
     # Kevin // Comment, uncomment the right one.
